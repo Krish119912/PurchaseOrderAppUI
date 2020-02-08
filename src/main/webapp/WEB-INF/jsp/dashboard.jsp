@@ -214,7 +214,7 @@
 									<div class="font-weight-bold">
 										<div class="text-truncate">Hi there! I am wondering if
 											you can help me with a problem I've been having.</div>
-										<div class="small text-gray-500">Emily Fowler · 58m</div>
+										<div class="small text-gray-500">Emily Fowler Â· 58m</div>
 									</div>
 								</a> <a class="dropdown-item d-flex align-items-center" href="#">
 									<div class="dropdown-list-image mr-3">
@@ -225,7 +225,7 @@
 									<div>
 										<div class="text-truncate">I have the photos that you
 											ordered last month, how would you like them sent to you?</div>
-										<div class="small text-gray-500">Jae Chun · 1d</div>
+										<div class="small text-gray-500">Jae Chun Â· 1d</div>
 									</div>
 								</a> <a class="dropdown-item d-flex align-items-center" href="#">
 									<div class="dropdown-list-image mr-3">
@@ -237,7 +237,7 @@
 										<div class="text-truncate">Last month's report looks
 											great, I am very happy with the progress so far, keep up the
 											good work!</div>
-										<div class="small text-gray-500">Morgan Alvarez · 2d</div>
+										<div class="small text-gray-500">Morgan Alvarez Â· 2d</div>
 									</div>
 								</a> <a class="dropdown-item d-flex align-items-center" href="#">
 									<div class="dropdown-list-image mr-3">
@@ -249,7 +249,7 @@
 										<div class="text-truncate">Am I a good boy? The reason I
 											ask is because someone told me that people say this to all
 											dogs, even if they aren't good...</div>
-										<div class="small text-gray-500">Chicken the Dog · 2w</div>
+										<div class="small text-gray-500">Chicken the Dog Â· 2w</div>
 									</div>
 								</a> <a class="dropdown-item text-center small text-gray-500"
 									href="#">Read More Messages</a>
@@ -260,7 +260,7 @@
 							class="nav-link dropdown-toggle" href="#" id="userDropdown"
 							role="button" data-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="false"> <span
-								class="mr-2 d-none d-lg-inline text-gray-600 small" id="currentEmployee"></span> <img
+								class="mr-2 d-none d-lg-inline text-gray-600 small" id="currentEmployee">User</span> <img
 								class="img-profile rounded-circle"
 								src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png">
 						</a>
@@ -356,7 +356,7 @@
 					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
 					<button class="close" type="button" data-dismiss="modal"
 						aria-label="Close">
-						<span aria-hidden="true">×</span>
+						<span aria-hidden="true">Ã</span>
 					</button>
 				</div>
 				<div class="modal-body">Select "Logout" below if you are ready
@@ -369,7 +369,70 @@
 			</div>
 		</div>
 	</div>
+ <script>
+                $(document).ready(function () {
+                    var crudServiceBaseUrl = "https://demos.telerik.com/kendo-ui/service",
+                        dataSource = new kendo.data.DataSource({
+                            transport: {
+                                read:  {
+                                    url: crudServiceBaseUrl + "/Products",
+                                    dataType: "jsonp"
+                                },
+                                update: {
+                                    url: crudServiceBaseUrl + "/Products/Update",
+                                    dataType: "jsonp"
+                                },
+                                destroy: {
+                                    url: crudServiceBaseUrl + "/Products/Destroy",
+                                    dataType: "jsonp"
+                                },
+                                create: {
+                                    url: crudServiceBaseUrl + "/Products/Create",
+                                    dataType: "jsonp"
+                                },
+                                parameterMap: function(options, operation) {
+                                    if (operation !== "read" && options.models) {
+                                        return {models: kendo.stringify(options.models)};
+                                    }
+                                }
+                            },
+                            batch: true,
+                            pageSize: 20,
+                            schema: {
+                                model: {
+                                    id: "ProductID",
+                                    fields: {
+                                        ProductID: { editable: false, nullable: true },
+                                        ProductName: { validation: { required: true } },
+                                        UnitPrice: { type: "number", validation: { required: true, min: 1} },
+                                        Discontinued: { type: "boolean" },
+                                        UnitsInStock: { type: "number", validation: { min: 0, required: true } }
+                                    }
+                                }
+                            }
+                        });
 
+                    $("#grid").kendoGrid({
+                        dataSource: dataSource,
+                        pageable: true,
+                        height: 550,
+                        toolbar: ["create"],
+                        columns: [
+                            { field:"ProductName", title: "Product Name" },
+                            { field: "UnitPrice", title:"Unit Price", format: "{0:c}", width: "120px" },
+                            { field: "UnitsInStock", title:"Units In Stock", width: "120px" },
+                            { field: "Discontinued", width: "120px", editor: customBoolEditor },
+                            { command: ["edit", "destroy"], title: "&nbsp;", width: "250px" }],
+                        editable: "popup"
+                    });
+                });
+
+                function customBoolEditor(container, options) {
+                    var guid = kendo.guid();
+                    $('<input class="k-checkbox" id="' + guid + '" type="checkbox" name="Discontinued" data-type="boolean" data-bind="checked:Discontinued">').appendTo(container);
+                    $('<label class="k-checkbox-label" for="' + guid + '">​</label>').appendTo(container);
+                }
+            </script>
 
 	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="../vendor/jquery-easing/jquery.easing.min.js"></script>

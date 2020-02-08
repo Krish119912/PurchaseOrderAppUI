@@ -84,7 +84,7 @@ font-weight:400;
 													class="custom-control-label" for="customCheck">Admin</label>
 											</div>
 
-											<a href="#" id="btnLogin"
+											<a href="dashboard" id="btnLogin"
 												class="btn btn-primary btn-user btn-block"> Login </a>
 											<!-- <hr>
                     <a href="index.html" class="btn btn-google btn-user btn-block">
@@ -113,62 +113,62 @@ font-weight:400;
 
 		$(document).ready(function() {
 		
-			var Error_list= $('.Error_list');
-			$("#btnLogin").click(function() {		
-			    var email = $("#exampleInputEmail").val();
-                var password = $("#exampleInputPassword").val();
-                var isAdmin =$('#customCheck');
-                if(isAdmin[0].checked){
-                	var role='ADMIN';
-                }else{
-                	var role="MEMBER";
+// 			var Error_list= $('.Error_list');
+// 			$("#btnLogin").click(function() {		
+// 			    var email = $("#exampleInputEmail").val();
+//                 var password = $("#exampleInputPassword").val();
+//                 var isAdmin =$('#customCheck');
+//                 if(isAdmin[0].checked){
+//                 	var role='ADMIN';
+//                 }else{
+//                 	var role="MEMBER";
                 	
-                }							// Checking for blank fields..25rem solid #4e73df!important
-												if (email == ''|| password == '') {
-													$('input[type="email"],input[type="password"]').css("border-left",".25rem solid red");
-													$('input[type="email"],input[type="password"]').css("box-shadow","0 0 3px lightgray");
-													alert("Please fill all fields...!!!!!!");
-												}
+//                 }							// Checking for blank fields..25rem solid #4e73df!important
+// 												if (email == ''|| password == '') {
+// 													$('input[type="email"],input[type="password"]').css("border-left",".25rem solid red");
+// 													$('input[type="email"],input[type="password"]').css("box-shadow","0 0 3px lightgray");
+// 													alert("Please fill all fields...!!!!!!");
+// 												}
 												
-												var ajax = {
-														email : $("#exampleInputEmail").val(),
-														password :$("#exampleInputPassword").val(),
-														role:role
-														 }
-												console.log(ajax);
-												$.ajax({
-										            		"async": true,
-										            		"url": "http://localhost:8080/login",
-										            		"method": "POST",
-										            		/* "data":jQuery.parseJSON(ajax), */
-										            		"data":JSON.stringify(ajax),
-										            		/* "type":"JSON", */
-										            		"headers": {
-										            		"content-type": "application/json",
-										            		"accept": "application/json"
-										            		},
-										            		success:function(data){
-										            			  if(data.status== 1){
-										            				var selectedLogin =JSON.stringify(data.SystemUserLoginData);
-										            				console.log(selectedLogin);
-                                                                	  localStorage.setItem('SelectedLogin',selectedLogin);
-                                                                	  window.location.replace("dashboard");
-                                                                	console.log(selectedLogin);
-                                                                  }else{
-                                                                	  Error_list.append("invalid Credentials ");
-                                                                  }
+// 												var ajax = {
+// 														email : $("#exampleInputEmail").val(),
+// 														password :$("#exampleInputPassword").val(),
+// 														role:role
+// 														 }
+// 												console.log(ajax);
+// 												$.ajax({
+// 										            		"async": true,
+// 										            		"url": "http://localhost:8080/login",
+// 										            		"method": "POST",
+// 										            		/* "data":jQuery.parseJSON(ajax), */
+// 										            		"data":JSON.stringify(ajax),
+// 										            		/* "type":"JSON", */
+// 										            		"headers": {
+// 										            		"content-type": "application/json",
+// 										            		"accept": "application/json"
+// 										            		},
+// 										            		success:function(data){
+// 										            			  if(data.status== 1){
+// 										            				var selectedLogin =JSON.stringify(data.SystemUserLoginData);
+// 										            				console.log(selectedLogin);
+//                                                                 	  localStorage.setItem('SelectedLogin',selectedLogin);
+//                                                                 	  window.location.replace("dashboard");
+//                                                                 	console.log(selectedLogin);
+//                                                                   }else{
+//                                                                 	  Error_list.append("invalid Credentials ");
+//                                                                   }
                                                                   
 										            			
 										            			
-										            		},
-										            		complete:function(jqXHR){
-										            		if(jqXHR.status=='401'){
-										            			Error_list.empty();
-										            			Error_list.append("invalid Credentials");
-										            		}
-										            		}
-												});
-									});
+// 										            		},
+// 										            		complete:function(jqXHR){
+// 										            		if(jqXHR.status=='401'){
+// 										            			Error_list.empty();
+// 										            			Error_list.append("invalid Credentials");
+// 										            		}
+// 										            		}
+// 												});
+// 									});
 			
 			
 			
